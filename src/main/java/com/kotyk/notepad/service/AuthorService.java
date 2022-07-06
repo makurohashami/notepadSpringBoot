@@ -12,7 +12,7 @@ public interface AuthorService {
 
     Collection<Author> readAll();
 
-    Author update(Author author);
+    Author update(String username, Author author);
 
     void delete(String username);
 
