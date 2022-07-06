@@ -32,4 +32,34 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    public ResponseEntity<?> methodUsernameAlreadyExistsException(WebRequest request) {
+        Error error = new Error(
+                new Date(),
+                "This username is already taken",
+                request.getDescription(false));
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<?> methodEmailAlreadyExistsException(WebRequest request) {
+        Error error = new Error(
+                new Date(),
+                "This email is already taken",
+                request.getDescription(false));
+
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> methodResourceNotFoundException(WebRequest request) {
+        Error error = new Error(
+                new Date(),
+                "Resource not found",
+                request.getDescription(false));
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+
 }
