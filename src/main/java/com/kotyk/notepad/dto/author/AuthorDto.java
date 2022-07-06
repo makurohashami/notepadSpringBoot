@@ -6,6 +6,7 @@ import com.kotyk.notepad.dto.note.NoteDto;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 public class AuthorDto {
@@ -17,10 +18,11 @@ public class AuthorDto {
     @NotBlank
     public String name;
     @Email
+    @NotNull
     public String email;
     @JsonIgnore
     public Collection<NoteDto> notes;
     @JsonIgnore
-    public Boolean isDeleted;
+    public Boolean isDeleted = Boolean.FALSE;
 
 }

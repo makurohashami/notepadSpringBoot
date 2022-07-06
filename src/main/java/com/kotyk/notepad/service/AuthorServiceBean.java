@@ -39,16 +39,30 @@ public class AuthorServiceBean implements AuthorService{
 
     @Override
     public Author update(String username, Author author) {
-        return authorRepository.findByUsername(username)
-                .map(entity -> {
-                    entity.setUsername(author.getUsername());
-                    entity.setName(author.getName());
-                    entity.setEmail(author.getEmail());
-                    entity.setNotes(author.getNotes());
 
-                    return authorRepository.save(entity);
-                })
-                .orElseThrow(ResourceNotFoundException::new);
+        Author newAuthor = getAuthorByUsername(username);
+
+        if(author.getUsername() != null) {
+            if(authorRepository.isUsernameExists(author.getUsername()) > 0) {
+                throw new UsernameAlreadyExistsException();
+            } else {
+                newAuthor.setUsername(author.getUsername());
+            }
+        }
+
+        if(author.getEmail() != null) {
+            if(authorRepository.isEmailExists(author.getEmail()) > 0) {
+                throw new EmailAlreadyExistsException();
+            } else {
+                newAuthor.setEmail(author.getEmail());
+            }
+        }
+
+        if(author.getName() != null) {
+            newAuthor.setName(author.getName());
+        }
+
+        return authorRepository.save(newAuthor);
     }
 
     @Override
@@ -61,8 +75,7 @@ public class AuthorServiceBean implements AuthorService{
     ///---Technical---\\\
 
     private Author getAuthorByUsername(String username) {
-        Author author = authorRepository.findByUsername(username)
+        return authorRepository.findByUsername(username)
                 .orElseThrow(ResourceNotFoundException::new);
-        return author;
     }
 }
