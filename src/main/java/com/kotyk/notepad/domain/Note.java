@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Note {
 
     @Id

@@ -13,6 +13,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class Author {
 
     @Id
