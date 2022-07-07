@@ -7,11 +7,11 @@ import java.util.Date;
 
 public class NoteDeleteDto {
 
-    public NoteDeleteDto(String title) {
-        this.title = title;
+    public NoteDeleteDto(Integer id) {
+        this.id = id;
     }
 
-    public String title;
+    public Integer id;
     public String message = "Note was deleted successfully";
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     public Date date = Date.from(Instant.now());
