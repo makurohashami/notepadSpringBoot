@@ -1,6 +1,5 @@
 package com.kotyk.notepad.web;
 
-import com.kotyk.notepad.dto.author.AuthorDto;
 import com.kotyk.notepad.dto.author.AuthorReadDto;
 import com.kotyk.notepad.dto.note.NoteDeleteDto;
 import com.kotyk.notepad.dto.note.NoteDto;
@@ -13,13 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Collection;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping(value = "/notepad/authors", produces = MediaType.APPLICATION_JSON_VALUE)
-public class NoteController {
+public class NoteController implements NoteSwagger {
 
     private final NoteService noteService;
 
@@ -36,7 +34,7 @@ public class NoteController {
     @GetMapping("{username}/notes/{id}")
     @ResponseStatus(HttpStatus.OK)
     public NoteReadDto viewNote(@PathVariable("username") String username, @PathVariable("id") Integer id) {
-        var note = noteService.read(username,id);
+        var note = noteService.read(username, id);
         var dto = NoteMapper.INSTANCE.noteToRead(note);
 
         return dto;
@@ -45,7 +43,7 @@ public class NoteController {
     @GetMapping("{username}/notes/title/{title}")
     @ResponseStatus(HttpStatus.OK)
     public Collection<NoteReadDto> viewNotesByTitle(@PathVariable("username") String username, @PathVariable("title") String title) {
-        var note = noteService.readByTitle(username,title);
+        var note = noteService.readByTitle(username, title);
         var dto = NoteMapper.INSTANCE.notesToReads(note);
 
         return dto;
@@ -63,8 +61,8 @@ public class NoteController {
     @PatchMapping("{username}/notes/{id}")
     @ResponseStatus(HttpStatus.OK)
     public NoteDto patchNote(@PathVariable("username") String username,
-                     @PathVariable("id") Integer id,
-                     @RequestBody /*@Valid*/ NoteDto noteDto) {
+                             @PathVariable("id") Integer id,
+                             @RequestBody /*@Valid*/ NoteDto noteDto) {
         //todo validation
         var note = NoteMapper.INSTANCE.dtoToNote(noteDto);
         var dto = NoteMapper.INSTANCE.noteToDto(noteService.update(username, id, note));

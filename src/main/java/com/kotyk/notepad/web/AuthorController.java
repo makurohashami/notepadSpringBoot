@@ -16,7 +16,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping(value = "/notepad", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class AuthorController {
+public class AuthorController implements AuthorSwagger {
 
     private final AuthorService authorService;
 
