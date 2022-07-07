@@ -41,10 +41,24 @@ public class NoteServiceBean implements NoteService {
         return noteRepository.findAll(username);
     }
 
-    //todo
     @Override
     public Note update(String username, Integer id, Note note) {
-        return null;
+        Note newNote = getNoteByIdAndAuthorUsername(username, id);
+
+        if(note.getTitle() != null) {
+            newNote.setTitle(note.getTitle());
+        }
+        if(note.getDescription() != null) {
+            newNote.setDescription(note.getDescription());
+        }
+        if(note.getType() != null) {
+            newNote.setType(note.getType());
+        }
+        if(note.getStatus() != null) {
+            newNote.setStatus(note.getStatus());
+        }
+
+        return noteRepository.save(newNote);
     }
 
     @Override

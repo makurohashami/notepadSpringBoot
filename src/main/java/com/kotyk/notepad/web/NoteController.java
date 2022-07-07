@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collection;
 
 @AllArgsConstructor
@@ -63,7 +64,8 @@ public class NoteController {
     @ResponseStatus(HttpStatus.OK)
     public NoteDto patchNote(@PathVariable("username") String username,
                      @PathVariable("id") Integer id,
-                     @RequestBody NoteDto noteDto) {
+                     @RequestBody /*@Valid*/ NoteDto noteDto) {
+        //todo validation
         var note = NoteMapper.INSTANCE.dtoToNote(noteDto);
         var dto = NoteMapper.INSTANCE.noteToDto(noteService.update(username, id, note));
 

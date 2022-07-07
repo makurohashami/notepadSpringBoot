@@ -50,7 +50,7 @@ public class AuthorController {
     @PatchMapping ("/authors/{username}")
     @ResponseStatus(HttpStatus.OK)
     public AuthorDto patchAuthor(@PathVariable String username, @RequestBody /*@Valid*/ AuthorDto authorDto) {
-        //todo Make validation
+        //todo validation
         var author = AuthorMapper.INSTANCE.dtoToAuthor(authorDto);
         var dto = AuthorMapper.INSTANCE.authorToDto(authorService.update(username, author));
 
