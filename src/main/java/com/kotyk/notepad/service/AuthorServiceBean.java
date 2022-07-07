@@ -1,6 +1,7 @@
 package com.kotyk.notepad.service;
 
 import com.kotyk.notepad.domain.Author;
+import com.kotyk.notepad.domain.Note;
 import com.kotyk.notepad.repository.AuthorRepository;
 import com.kotyk.notepad.util.exception.EmailAlreadyExistsException;
 import com.kotyk.notepad.util.exception.ResourceNotFoundException;
@@ -69,6 +70,9 @@ public class AuthorServiceBean implements AuthorService{
     public void delete(String username) {
         Author author = getAuthorByUsername(username);
         author.setIsDeleted(Boolean.TRUE);
+        for(Note notes: author.getNotes()) {
+            notes.setIsDeleted(Boolean.TRUE);
+        }
         authorRepository.save(author);
     }
 
