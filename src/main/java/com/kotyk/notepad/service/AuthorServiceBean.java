@@ -9,6 +9,7 @@ import com.kotyk.notepad.util.exception.UsernameAlreadyExistsException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -30,7 +31,16 @@ public class AuthorServiceBean implements AuthorService{
 
     @Override
     public Author read(String username) {
-         return getAuthorByUsername(username);
+         Author author = getAuthorByUsername(username);
+         Collection<Note> notes = new ArrayList<>();
+         for(Note note : author.getNotes()) {
+             if(note.getIsDeleted().equals(Boolean.FALSE)) {
+                 notes.add(note);
+             }
+         }
+         author.setNotes(notes);
+
+         return author;
     }
 
     @Override
