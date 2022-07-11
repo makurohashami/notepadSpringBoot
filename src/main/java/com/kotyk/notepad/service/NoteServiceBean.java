@@ -19,7 +19,9 @@ public class NoteServiceBean implements NoteService {
 
     @Override
     public Author create(String username, Note note) {
-        Author author = getAuthorByUsername(username);
+        note.setTitle(note.getTitle().trim());
+
+        Author author = getAuthorByUsername(username.trim());
         note.setNoteAuthor(author);
         author.getNotes().add(note);
 
@@ -45,11 +47,11 @@ public class NoteServiceBean implements NoteService {
     public Note update(String username, Integer id, Note note) {
         Note newNote = getNoteByIdAndAuthorUsername(username, id);
 
-        if(note.getTitle() != null) {
-            newNote.setTitle(note.getTitle());
+        if(note.getTitle() != null && note.getTitle().trim().length() > 0) {
+            newNote.setTitle(note.getTitle().trim());
         }
-        if(note.getDescription() != null) {
-            newNote.setDescription(note.getDescription());
+        if(note.getDescription() != null && note.getDescription().trim().length() > 0) {
+            newNote.setDescription(note.getDescription().trim());
         }
         if(note.getType() != null) {
             newNote.setType(note.getType());

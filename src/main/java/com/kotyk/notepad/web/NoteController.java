@@ -63,7 +63,6 @@ public class NoteController implements NoteSwagger {
     public NoteDto patchNote(@PathVariable("username") String username,
                              @PathVariable("id") Integer id,
                              @RequestBody /*@Valid*/ NoteDto noteDto) {
-        //todo validation
         var note = NoteMapper.INSTANCE.dtoToNote(noteDto);
         var dto = NoteMapper.INSTANCE.noteToDto(noteService.update(username, id, note));
 

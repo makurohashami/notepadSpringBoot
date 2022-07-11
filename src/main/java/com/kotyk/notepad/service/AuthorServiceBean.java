@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -20,6 +22,10 @@ public class AuthorServiceBean implements AuthorService{
 
     @Override
     public Author create(Author author) {
+        author.setName(author.getName().trim());
+        author.setEmail(author.getEmail().trim());
+        author.setUsername(author.getUsername().trim());
+
         if(authorRepository.isUsernameExists(author.getUsername()) > 0) {
             throw new UsernameAlreadyExistsException();
         } else if (authorRepository.isEmailExists(author.getEmail()) > 0) {
@@ -53,15 +59,18 @@ public class AuthorServiceBean implements AuthorService{
 
         Author newAuthor = getAuthorByUsername(username);
 
-        if(author.getUsername() != null) {
+        if(author.getUsername() != null && author.getUsername().trim().length() > 0) {
+            author.setUsername(author.getUsername().trim());
             if(authorRepository.isUsernameExists(author.getUsername()) > 0) {
                 throw new UsernameAlreadyExistsException();
             } else {
-                newAuthor.setUsername(author.getUsername());
+                newAuthor.setUsername(author.getUsername().trim());
             }
         }
 
         if(author.getEmail() != null) {
+            //todo Email validation
+            author.setEmail(author.getEmail().trim());
             if(authorRepository.isEmailExists(author.getEmail()) > 0) {
                 throw new EmailAlreadyExistsException();
             } else {
@@ -69,8 +78,8 @@ public class AuthorServiceBean implements AuthorService{
             }
         }
 
-        if(author.getName() != null) {
-            newAuthor.setName(author.getName());
+        if(author.getName() != null && author.getName().trim().length() > 0) {
+            newAuthor.setName(author.getName().trim());
         }
 
         return authorRepository.save(newAuthor);
