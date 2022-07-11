@@ -2,12 +2,14 @@ package com.kotyk.notepad.service;
 
 import com.kotyk.notepad.domain.Author;
 import com.kotyk.notepad.domain.Note;
+import com.kotyk.notepad.domain.NoteStatus;
 import com.kotyk.notepad.repository.AuthorRepository;
 import com.kotyk.notepad.repository.NoteRepository;
 import com.kotyk.notepad.util.exception.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
@@ -68,6 +70,19 @@ public class NoteServiceBean implements NoteService {
         Note note = getNoteByIdAndAuthorUsername(username, id);
         note.setIsDeleted(Boolean.TRUE);
         noteRepository.save(note);
+    }
+
+    @Override
+    public Collection<Note> readByStatus(String username, NoteStatus status) {
+        Author author = getAuthorByUsername(username);
+        Collection<Note> notes = new ArrayList<>();
+        for(Note note: author.getNotes()) {
+            if(note.getStatus().equals(status) && note.getIsDeleted().equals(Boolean.FALSE)) {
+                notes.add(note);
+            }
+        }
+
+        return notes;
     }
 
     ///---Technical---\\\
