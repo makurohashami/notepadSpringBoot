@@ -2,10 +2,12 @@ package com.kotyk.notepad.dto.note;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.ToString;
 
 import java.time.Instant;
 import java.util.Date;
 
+@ToString
 public class NoteDeleteDto {
 
     public NoteDeleteDto(Integer id) {

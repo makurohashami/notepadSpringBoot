@@ -6,6 +6,7 @@ import com.kotyk.notepad.dto.author.AuthorReadDto;
 import com.kotyk.notepad.service.AuthorService;
 import com.kotyk.notepad.util.config.AuthorMapper;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.Collection;
 @RestController
 @RequestMapping(value = "/notepad", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
+@Log4j2
 public class AuthorController implements AuthorSwagger {
 
     private final AuthorService authorService;
@@ -23,44 +25,55 @@ public class AuthorController implements AuthorSwagger {
     @PostMapping("/authors")
     @ResponseStatus(HttpStatus.CREATED)
     public AuthorDto addAuthor(@RequestBody @Valid AuthorDto authorDto) {
+        log.debug("addAuthor() Controller - start: authorDto = {}", authorDto);
         var author = AuthorMapper.INSTANCE.dtoToAuthor(authorDto);
         var dto = AuthorMapper.INSTANCE.authorToDto(authorService.create(author));
 
+        log.debug("addAuthor() Controller - end: authorDto = {}", dto);
         return dto;
     }
 
     @GetMapping("/authors/{username}")
     @ResponseStatus(HttpStatus.OK)
     public AuthorReadDto readAuthor(@PathVariable String username) {
+        log.debug("readAuthor() Controller - start: username = {}", username);
         var author = authorService.read(username);
         var dto = AuthorMapper.INSTANCE.authorToReadDto(author);
 
+        log.debug("readAuthor() Controller - end: Author = {}", dto);
         return dto;
     }
 
     @GetMapping("/authors")
     @ResponseStatus(HttpStatus.OK)
     public Collection<AuthorDto> readAuthors() {
+        log.debug("readAuthors() Controller - start:");
         var authors = authorService.readAll();
         var dto = AuthorMapper.INSTANCE.authorsToDtos(authors);
 
+        log.debug("readAuthors() Controller - end: authors size = {}", dto.size());
         return dto;
     }
 
     @PatchMapping ("/authors/{username}")
     @ResponseStatus(HttpStatus.OK)
     public AuthorDto patchAuthor(@PathVariable String username, @RequestBody /*@Valid*/ AuthorDto authorDto) {
+        log.debug("patchAuthor() Controller - start: username = {}, authorDto = {}", username, authorDto);
         var author = AuthorMapper.INSTANCE.dtoToAuthor(authorDto);
         var dto = AuthorMapper.INSTANCE.authorToDto(authorService.update(username, author));
 
+        log.debug("patchAuthor() Controller - end: author = {}", dto);
         return dto;
     }
 
     @DeleteMapping("/authors/{username}")
     @ResponseStatus(HttpStatus.GONE)
     public AuthorDeleteDto deleteAuthor(@PathVariable String username) {
+        log.debug("deleteAuthor() Controller - start: username = {}", username);
         authorService.delete(username);
-        return new AuthorDeleteDto(username);
+        var deleted = new AuthorDeleteDto(username);
+        log.debug("deleteAuthor() Controller - end: deleted = {}", deleted);
+        return deleted;
     }
 
 }
