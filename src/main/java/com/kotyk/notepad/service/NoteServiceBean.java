@@ -28,7 +28,7 @@ public class NoteServiceBean implements NoteService {
         author.getNotes().add(note);
         //todo fix author output
         log.info("create() - end: author = {}", author);
-       return authorRepository.save(author);
+        return authorRepository.save(author);
     }
 
     @Override
@@ -66,16 +66,16 @@ public class NoteServiceBean implements NoteService {
         log.info("update() - start: username = {}, id = {}, note = {}", username, id, note);
         Note newNote = getNoteByIdAndAuthorUsername(username, id);
 
-        if(note.getTitle() != null && note.getTitle().trim().length() > 0) {
+        if (note.getTitle() != null && note.getTitle().trim().length() > 0) {
             newNote.setTitle(note.getTitle().trim());
         }
-        if(note.getDescription() != null && note.getDescription().trim().length() > 0) {
+        if (note.getDescription() != null && note.getDescription().trim().length() > 0) {
             newNote.setDescription(note.getDescription().trim());
         }
-        if(note.getType() != null) {
+        if (note.getType() != null) {
             newNote.setType(note.getType());
         }
-        if(note.getStatus() != null) {
+        if (note.getStatus() != null) {
             newNote.setStatus(note.getStatus());
         }
 

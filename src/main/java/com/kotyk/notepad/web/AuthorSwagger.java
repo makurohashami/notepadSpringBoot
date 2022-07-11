@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.Collection;
+
 @Tag(name = "Authors", description = "CRUDs for authors")
 public interface AuthorSwagger {
 

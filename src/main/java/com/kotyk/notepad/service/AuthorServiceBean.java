@@ -16,7 +16,7 @@ import java.util.Collection;
 @Service
 @Log4j2
 @AllArgsConstructor
-public class AuthorServiceBean implements AuthorService{
+public class AuthorServiceBean implements AuthorService {
 
     private final AuthorRepository authorRepository;
 
@@ -27,7 +27,7 @@ public class AuthorServiceBean implements AuthorService{
         author.setEmail(author.getEmail().trim());
         author.setUsername(author.getUsername().trim());
 
-        if(authorRepository.isUsernameExists(author.getUsername()) > 0) {
+        if (authorRepository.isUsernameExists(author.getUsername()) > 0) {
             log.info("create() - exception: username taken, username = {}", author.getUsername());
             throw new UsernameAlreadyExistsException();
         } else if (authorRepository.isEmailExists(author.getEmail()) > 0) {
@@ -43,17 +43,17 @@ public class AuthorServiceBean implements AuthorService{
     @Override
     public Author read(String username) {
         log.info("read() - start: username = {}", username);
-         Author author = getAuthorByUsername(username);
-         Collection<Note> notes = new ArrayList<>();
-         for(Note note : author.getNotes()) {
-             if(note.getIsDeleted().equals(Boolean.FALSE)) {
-                 notes.add(note);
-             }
-         }
-         author.setNotes(notes);
-         //todo fix output author with notes
-         log.info("read() - end: author = {}", author);
-         return author;
+        Author author = getAuthorByUsername(username);
+        Collection<Note> notes = new ArrayList<>();
+        for (Note note : author.getNotes()) {
+            if (note.getIsDeleted().equals(Boolean.FALSE)) {
+                notes.add(note);
+            }
+        }
+        author.setNotes(notes);
+        //todo fix output author with notes
+        log.info("read() - end: author = {}", author);
+        return author;
     }
 
     @Override
@@ -70,9 +70,9 @@ public class AuthorServiceBean implements AuthorService{
 
         Author newAuthor = getAuthorByUsername(username);
 
-        if(author.getUsername() != null && author.getUsername().trim().length() > 0) {
+        if (author.getUsername() != null && author.getUsername().trim().length() > 0) {
             author.setUsername(author.getUsername().trim());
-            if(authorRepository.isUsernameExists(author.getUsername()) > 0) {
+            if (authorRepository.isUsernameExists(author.getUsername()) > 0) {
                 log.info("create() - exception: username taken, username = {}", author.getUsername());
                 throw new UsernameAlreadyExistsException();
             } else {
@@ -80,10 +80,10 @@ public class AuthorServiceBean implements AuthorService{
             }
         }
 
-        if(author.getEmail() != null) {
+        if (author.getEmail() != null) {
             //todo Email validation
             author.setEmail(author.getEmail().trim());
-            if(authorRepository.isEmailExists(author.getEmail()) > 0) {
+            if (authorRepository.isEmailExists(author.getEmail()) > 0) {
                 log.info("create() - exception: email taken, email = {}", author.getEmail());
                 throw new EmailAlreadyExistsException();
             } else {
@@ -91,7 +91,7 @@ public class AuthorServiceBean implements AuthorService{
             }
         }
 
-        if(author.getName() != null && author.getName().trim().length() > 0) {
+        if (author.getName() != null && author.getName().trim().length() > 0) {
             newAuthor.setName(author.getName().trim());
         }
 
@@ -104,7 +104,7 @@ public class AuthorServiceBean implements AuthorService{
         log.info("delete() - start: username = {}", username);
         Author author = getAuthorByUsername(username);
         author.setIsDeleted(Boolean.TRUE);
-        for(Note notes: author.getNotes()) {
+        for (Note notes : author.getNotes()) {
             notes.setIsDeleted(Boolean.TRUE);
         }
         log.info("delete() - end: isDeleted = {}", author.getIsDeleted());
@@ -113,6 +113,7 @@ public class AuthorServiceBean implements AuthorService{
 
     ///---Technical---\\\
 
+    //todo logs here
     private Author getAuthorByUsername(String username) {
         return authorRepository.findByUsername(username)
                 .orElseThrow(ResourceNotFoundException::new);
