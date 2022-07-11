@@ -13,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class Note {
 
     @Id

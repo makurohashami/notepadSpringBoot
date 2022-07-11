@@ -18,8 +18,15 @@ spring:
 # Server configuration
 server:
   port: 8088 #set your port
+# Logger configuration
+logging:
+  level:
+    org.springframework: info
+    org.hibernate: info
+    com.kotyk.notepad: info
+# swagger-ui custom path
 springdoc:
   swagger-ui:
-    path: /swagger-ui.html # swagger-ui custom path
+    path: /swagger-ui.html
   api-docs:
     path: /v3/api-docs.yaml
