@@ -2,6 +2,7 @@ package com.kotyk.notepad.util.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -61,5 +62,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> methodHttpMessageNotReadableException(WebRequest request) {
+        Error error = new Error(
+                new Date(),
+                "Bad request",
+                request.getDescription(false));
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 
 }
