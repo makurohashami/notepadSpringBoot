@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @Log4j2
@@ -74,12 +76,13 @@ public class AuthorServiceBean implements AuthorService {
             if (authorRepository.isUsernameExists(author.getUsername()) > 0) {
                 throw new UsernameAlreadyExistsException();
             } else {
-                newAuthor.setUsername(author.getUsername().trim());
+                newAuthor.setUsername(author.getUsername());
             }
         }
 
-        if (author.getEmail() != null) {
-            //todo Email validation
+        Pattern pattern = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)");
+        Matcher matcher = pattern.matcher(author.getEmail());
+        if (author.getEmail() != null && matcher.matches()) {
             author.setEmail(author.getEmail().trim());
             if (authorRepository.isEmailExists(author.getEmail()) > 0) {
                 throw new EmailAlreadyExistsException();
