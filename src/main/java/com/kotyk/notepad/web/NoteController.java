@@ -1,6 +1,7 @@
 package com.kotyk.notepad.web;
 
 import com.kotyk.notepad.domain.NoteStatus;
+import com.kotyk.notepad.domain.NoteType;
 import com.kotyk.notepad.dto.author.AuthorReadDto;
 import com.kotyk.notepad.dto.note.NoteDeleteDto;
 import com.kotyk.notepad.dto.note.NoteDto;
@@ -100,6 +101,17 @@ public class NoteController implements NoteSwagger {
         var note = noteService.readByStatus(username, status);
         var dto = NoteMapper.INSTANCE.notesToReads(note);
         log.debug("viewNotesByStatus() Controller - end: notes count = {}", dto.size());
+
+        return dto;
+    }
+
+    @GetMapping("{username}/notes/type/{type}")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<NoteReadDto> viewNotesByType(@PathVariable("username") String username, @PathVariable("type") NoteType type) {
+        log.debug("viewNotesByType() Controller - start: username = {}, type = {}", username, type);
+        var note = noteService.readByType(username, type);
+        var dto = NoteMapper.INSTANCE.notesToReads(note);
+        log.debug("viewNotesByType() Controller - end: notes count = {}", dto.size());
 
         return dto;
     }

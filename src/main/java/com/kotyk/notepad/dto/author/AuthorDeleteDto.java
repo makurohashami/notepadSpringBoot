@@ -19,5 +19,6 @@ public class AuthorDeleteDto {
     public String message = "Author was deleted successfully";
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @Schema(description = "Date of deletion", example = "2022-11-15 12:36", required = true)
+    //todo fix time
     public Date date = Date.from(Instant.now());
 }

@@ -3,6 +3,7 @@ package com.kotyk.notepad.service;
 import com.kotyk.notepad.domain.Author;
 import com.kotyk.notepad.domain.Note;
 import com.kotyk.notepad.domain.NoteStatus;
+import com.kotyk.notepad.domain.NoteType;
 import com.kotyk.notepad.repository.AuthorRepository;
 import com.kotyk.notepad.repository.NoteRepository;
 import com.kotyk.notepad.util.exception.ResourceNotFoundException;
@@ -93,7 +94,7 @@ public class NoteServiceBean implements NoteService {
     @Override
     public Collection<Note> readByStatus(String username, NoteStatus status) {
         log.info("readByStatus() - start: username = {}, status = {}", username, status);
-        Author author = getAuthorByUsername(username);
+        var author = getAuthorByUsername(username);
         Collection<Note> notes = new ArrayList<>();
         for(Note note: author.getNotes()) {
             if(note.getStatus().equals(status) && note.getIsDeleted().equals(Boolean.FALSE)) {
@@ -101,6 +102,21 @@ public class NoteServiceBean implements NoteService {
             }
         }
         log.info("readByStatus() - end: notes = {}", notes);
+
+        return notes;
+    }
+
+    @Override
+    public Collection<Note> readByType(String username, NoteType type) {
+        log.info("readByType() - start: username = {}, type = {}", username, type);
+        var author = getAuthorByUsername(username);
+        Collection<Note> notes = new ArrayList<>();
+        for(Note note: author.getNotes()) {
+            if(note.getType().equals(type) && note.getIsDeleted().equals(Boolean.FALSE)) {
+                notes.add(note);
+            }
+        }
+        log.info("readByType() - end: notes = {}", notes);
 
         return notes;
     }

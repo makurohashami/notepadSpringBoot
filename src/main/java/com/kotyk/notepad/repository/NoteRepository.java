@@ -1,7 +1,6 @@
 package com.kotyk.notepad.repository;
 
 import com.kotyk.notepad.domain.Note;
-import com.kotyk.notepad.domain.NoteStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -21,6 +20,4 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
     @Query("select n from Note n where n.noteAuthor.username = :username and n.isDeleted = false and n.noteAuthor.isDeleted = false order by n.timeOfCreation asc")
     List<Note> findAll(String username);
 
-    /*@Query("select n from Note n where n.noteAuthor.username = :username and n.isDeleted = false and n.noteAuthor.isDeleted = false and n.status = :status order by n.timeOfCreation asc")
-    List<Note> findByStatus(String username, NoteStatus status);*/
 }

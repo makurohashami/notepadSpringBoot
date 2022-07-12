@@ -3,6 +3,7 @@ package com.kotyk.notepad.service;
 import com.kotyk.notepad.domain.Author;
 import com.kotyk.notepad.domain.Note;
 import com.kotyk.notepad.domain.NoteStatus;
+import com.kotyk.notepad.domain.NoteType;
 
 import java.util.Collection;
 
@@ -21,5 +22,7 @@ public interface NoteService {
     void delete(String username, Integer id);
 
     Collection<Note> readByStatus(String username, NoteStatus status);
+
+    Collection<Note> readByType(String username, NoteType type);
 
 }

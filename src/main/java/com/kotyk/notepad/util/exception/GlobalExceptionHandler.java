@@ -15,6 +15,7 @@ import java.util.Date;
 @Log4j2
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    //todo fix time for all
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> globalExceptionHandler(WebRequest request, Exception ex) {

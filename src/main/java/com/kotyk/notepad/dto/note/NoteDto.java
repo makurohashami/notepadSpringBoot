@@ -29,6 +29,7 @@ public class NoteDto {
     public NoteStatus status = NoteStatus.NONE;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @Schema(description = "Date of creation", example = "2022-11-15 12:36", required = true)
+    //todo fix time
     public Date timeOfCreation = Date.from(Instant.now());
     @JsonIgnore
     public Boolean isDeleted = Boolean.FALSE;
