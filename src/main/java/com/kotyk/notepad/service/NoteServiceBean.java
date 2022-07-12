@@ -26,7 +26,6 @@ public class NoteServiceBean implements NoteService {
         Author author = getAuthorByUsername(username.trim());
         note.setNoteAuthor(author);
         author.getNotes().add(note);
-        //todo fix author output
         log.info("create() - end: author = {}", author);
         return authorRepository.save(author);
     }
@@ -35,7 +34,6 @@ public class NoteServiceBean implements NoteService {
     public Note read(String username, Integer id) {
         log.info("read() - start: username = {}, id = {}", username, id);
         var note = getNoteByIdAndAuthorUsername(username, id);
-        //todo fix note output
         log.info("read() - end: note = {}", note);
 
         return note;
@@ -45,7 +43,6 @@ public class NoteServiceBean implements NoteService {
     public Collection<Note> readByTitle(String username, String title) {
         log.info("readByTitle() - start: username = {}, title = {}", username, title);
         var notes = noteRepository.findByTitle(username, title);
-        //todo fix notes output
         log.info("readByTitle() - end: notes count = {}", notes.size());
 
         return notes;
@@ -55,7 +52,6 @@ public class NoteServiceBean implements NoteService {
     public Collection<Note> readAll(String username) {
         log.info("readAll() - start: username = {}", username);
         var notes = noteRepository.findAll(username);
-        //todo fix notes output
         log.info("readAll() - end: notes count = {}", notes.size());
 
         return notes;
@@ -79,7 +75,6 @@ public class NoteServiceBean implements NoteService {
             newNote.setStatus(note.getStatus());
         }
 
-        //todo fix newNote output
         log.info("update() - end: note = {}", newNote);
         return noteRepository.save(newNote);
     }

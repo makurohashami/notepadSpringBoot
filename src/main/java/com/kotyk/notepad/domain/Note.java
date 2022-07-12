@@ -27,6 +27,7 @@ public class Note {
     private Date timeOfCreation;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
+    @ToString.Exclude
     private Author noteAuthor;
     private Boolean isDeleted;
 

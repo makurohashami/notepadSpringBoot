@@ -51,7 +51,6 @@ public class AuthorServiceBean implements AuthorService {
             }
         }
         author.setNotes(notes);
-        //todo fix output author with notes
         log.info("read() - end: author = {}", author);
         return author;
     }
