@@ -71,9 +71,8 @@ public class AuthorController implements AuthorSwagger {
     public AuthorDeleteDto deleteAuthor(@PathVariable String username) {
         log.debug("deleteAuthor() Controller - start: username = {}", username);
         authorService.delete(username);
-        var deleted = new AuthorDeleteDto(username);
-        log.debug("deleteAuthor() Controller - end: deleted = {}", deleted);
-        return deleted;
+        log.debug("deleteAuthor() Controller - end: Author was deleted successfully");
+        return new AuthorDeleteDto(username);
     }
 
 }

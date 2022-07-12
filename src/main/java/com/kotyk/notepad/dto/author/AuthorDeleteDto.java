@@ -7,7 +7,6 @@ import lombok.ToString;
 import java.time.Instant;
 import java.util.Date;
 
-@ToString
 public class AuthorDeleteDto {
 
     public AuthorDeleteDto(String username) {
