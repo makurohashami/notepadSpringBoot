@@ -96,9 +96,10 @@ public class NoteController implements NoteSwagger {
     @GetMapping("{username}/notes/status/{status}")
     @ResponseStatus(HttpStatus.OK)
     public Collection<NoteReadDto> viewNotesByStatus(@PathVariable("username") String username, @PathVariable("status") NoteStatus status) {
-        //todo fix exception
+        log.debug("viewNotesByStatus() Controller - start: username = {}, status = {}", username, status);
         var note = noteService.readByStatus(username, status);
         var dto = NoteMapper.INSTANCE.notesToReads(note);
+        log.debug("viewNotesByStatus() Controller - end: notes count = {}", dto.size());
 
         return dto;
     }

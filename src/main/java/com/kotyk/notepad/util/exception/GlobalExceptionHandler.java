@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Date;
 
@@ -16,10 +17,10 @@ import java.util.Date;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<?> globalExceptionHandler(WebRequest request) {
+    public ResponseEntity<?> globalExceptionHandler(WebRequest request, Exception ex) {
         Error error = new Error(
                 new Date(),
-                "All bad. Backend error",
+                "All bad. Backend error" /*+ " Class: " + ex.getClass().getName()*/,
                 request.getDescription(false));
 
         log.info("Exception: All bad. Backend error");
@@ -78,6 +79,17 @@ public class GlobalExceptionHandler {
                 request.getDescription(false));
 
         log.info("Exception: Bad request");
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<?> methodMethodArgumentTypeMismatchException(WebRequest request) {
+        Error error = new Error(
+                new Date(),
+                "Bad enum in request",
+                request.getDescription(false));
+
+        log.info("Exception: Bad enum in request");
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 

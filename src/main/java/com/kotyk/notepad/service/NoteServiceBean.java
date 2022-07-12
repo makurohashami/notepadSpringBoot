@@ -92,6 +92,7 @@ public class NoteServiceBean implements NoteService {
 
     @Override
     public Collection<Note> readByStatus(String username, NoteStatus status) {
+        log.info("readByStatus() - start: username = {}, status = {}", username, status);
         Author author = getAuthorByUsername(username);
         Collection<Note> notes = new ArrayList<>();
         for(Note note: author.getNotes()) {
@@ -99,6 +100,7 @@ public class NoteServiceBean implements NoteService {
                 notes.add(note);
             }
         }
+        log.info("readByStatus() - end: notes = {}", notes);
 
         return notes;
     }
