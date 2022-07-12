@@ -73,7 +73,6 @@ public class AuthorServiceBean implements AuthorService {
         if (author.getUsername() != null && author.getUsername().trim().length() > 0) {
             author.setUsername(author.getUsername().trim());
             if (authorRepository.isUsernameExists(author.getUsername()) > 0) {
-                log.info("create() - exception: username taken, username = {}", author.getUsername());
                 throw new UsernameAlreadyExistsException();
             } else {
                 newAuthor.setUsername(author.getUsername().trim());
@@ -84,7 +83,6 @@ public class AuthorServiceBean implements AuthorService {
             //todo Email validation
             author.setEmail(author.getEmail().trim());
             if (authorRepository.isEmailExists(author.getEmail()) > 0) {
-                log.info("create() - exception: email taken, email = {}", author.getEmail());
                 throw new EmailAlreadyExistsException();
             } else {
                 newAuthor.setEmail(author.getEmail());
