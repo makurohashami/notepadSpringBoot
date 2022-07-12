@@ -46,7 +46,7 @@ public class NoteServiceBean implements NoteService {
         log.info("readByTitle() - start: username = {}, title = {}", username, title);
         var notes = noteRepository.findByTitle(username, title);
         //todo fix notes output
-        log.info("readByTitle() - end: notes = {}", notes);
+        log.info("readByTitle() - end: notes count = {}", notes.size());
 
         return notes;
     }
@@ -56,7 +56,7 @@ public class NoteServiceBean implements NoteService {
         log.info("readAll() - start: username = {}", username);
         var notes = noteRepository.findAll(username);
         //todo fix notes output
-        log.info("readAll() - end: notes = {}", notes);
+        log.info("readAll() - end: notes count = {}", notes.size());
 
         return notes;
     }
@@ -95,7 +95,6 @@ public class NoteServiceBean implements NoteService {
 
     ///---Technical---\\\
 
-    //todo logs here
     private Author getAuthorByUsername(String username) {
         return authorRepository.findByUsername(username)
                 .orElseThrow(ResourceNotFoundException::new);

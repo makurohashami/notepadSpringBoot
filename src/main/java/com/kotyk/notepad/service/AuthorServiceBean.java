@@ -60,7 +60,7 @@ public class AuthorServiceBean implements AuthorService {
     public Collection<Author> readAll() {
         log.info("readAll() - start:");
         Collection<Author> authors = authorRepository.findAll();
-        log.info("readAll() - end: authors size = {}", authors.size());
+        log.info("readAll() - end: authors count = {}", authors.size());
         return authors;
     }
 
@@ -111,7 +111,6 @@ public class AuthorServiceBean implements AuthorService {
 
     ///---Technical---\\\
 
-    //todo logs here
     private Author getAuthorByUsername(String username) {
         return authorRepository.findByUsername(username)
                 .orElseThrow(ResourceNotFoundException::new);
