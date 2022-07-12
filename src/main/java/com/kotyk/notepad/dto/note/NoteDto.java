@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kotyk.notepad.domain.NoteStatus;
 import com.kotyk.notepad.domain.NoteType;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.ToString;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.time.Instant;
 import java.util.Date;
 
+@ToString
 public class NoteDto {
 
     @Min(0)

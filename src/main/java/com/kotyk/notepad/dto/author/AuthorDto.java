@@ -3,6 +3,7 @@ package com.kotyk.notepad.dto.author;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kotyk.notepad.dto.note.NoteDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.ToString;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -10,6 +11,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
+@ToString
 public class AuthorDto {
 
     @Min(0)

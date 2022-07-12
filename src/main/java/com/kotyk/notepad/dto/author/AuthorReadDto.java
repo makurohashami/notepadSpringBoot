@@ -2,9 +2,11 @@ package com.kotyk.notepad.dto.author;
 
 import com.kotyk.notepad.dto.note.NoteReadDto;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.ToString;
 
 import java.util.Collection;
 
+@ToString
 public class AuthorReadDto {
 
     @Schema(description = "Name of author", example = "M'White", required = true)

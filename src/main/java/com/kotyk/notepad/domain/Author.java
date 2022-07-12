@@ -14,6 +14,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @EqualsAndHashCode
+@ToString
 public class Author {
 
     @Id

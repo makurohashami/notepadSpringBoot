@@ -4,9 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kotyk.notepad.domain.NoteStatus;
 import com.kotyk.notepad.domain.NoteType;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.ToString;
 
 import java.util.Date;
 
+@ToString
 public class NoteReadDto {
 
     @Schema(description = "Title of note", example = "Buy bread", required = true)
