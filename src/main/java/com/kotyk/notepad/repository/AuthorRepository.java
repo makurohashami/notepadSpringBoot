@@ -22,4 +22,5 @@ public interface AuthorRepository extends JpaRepository<Author, Integer> {
 
     @Query("select a from Author a where a.isDeleted = false order by a.id asc ")
     List<Author> findAll();
+
 }

@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> globalExceptionHandler(WebRequest request, Exception ex) {
         Error error = new Error(
                 new Date(),
-                "All bad. Backend error" /*+ " Class: " + ex.getClass().getName()*/,
+                "All bad. Backend error" + " Class: " + ex.getClass().getName(),
                 request.getDescription(false));
 
         log.info("Exception: All bad. Backend error");

@@ -129,7 +129,7 @@ public class NoteServiceBean implements NoteService {
     }
 
     private Note getNoteByIdAndAuthorUsername(String username, Integer id) {
-        return noteRepository.findByIdAndAuthorUsername(username, id)
+        return noteRepository.findNoteByIdAndAuthorUsername(username, id)
                 .orElseThrow(ResourceNotFoundException::new);
     }
 
