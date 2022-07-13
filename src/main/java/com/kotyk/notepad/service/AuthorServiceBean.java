@@ -92,14 +92,14 @@ public class AuthorServiceBean implements AuthorService {
     }
 
     private Boolean isUsernameNotTaken(String username) {
-        if (authorRepository.isUsernameExists(username) > 0) {
+        if (authorRepository.existsByUsernameAndIsDeletedFalse(username)) {
             throw new UsernameAlreadyExistsException();
         }
         return Boolean.TRUE;
     }
 
     private Boolean isEmailNotTaken(String email) {
-        if (authorRepository.isEmailExists(email) > 0) {
+        if (authorRepository.existsByEmailAndIsDeletedFalse(email)) {
             throw new EmailAlreadyExistsException();
         }
         return Boolean.TRUE;

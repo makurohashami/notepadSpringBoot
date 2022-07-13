@@ -11,11 +11,9 @@ import java.util.Optional;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Integer> {
 
-    @Query("select count(a.username) from Author a where a.username = :username and a.isDeleted = false")
-    Integer isUsernameExists(String username);
+    Boolean existsByEmailAndIsDeletedFalse(String email);
 
-    @Query("select count(a.email) from Author a where a.email = :email and a.isDeleted = false")
-    Integer isEmailExists(String email);
+    Boolean existsByUsernameAndIsDeletedFalse(String username);
 
     @Query("select a from Author a where a.username = :username and a.isDeleted = false ")
     Optional<Author> findByUsername(String username);
