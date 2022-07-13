@@ -2,9 +2,14 @@ package com.kotyk.notepad.util.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 public class OpenApiConfig {
@@ -16,6 +21,9 @@ public class OpenApiConfig {
                 .info(new Info()
                         .title("Notepad CRUD API")
                         .description("SpringBoot RESTful service")
-                        .version("v0.0.1"));
+                        .version("v0.0.1")
+                        .contact(new Contact()
+                                .name("Y'Kotyk")
+                                .url("https://github.com/makurohashami")));
     }
 }
