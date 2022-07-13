@@ -25,8 +25,8 @@ public class NoteServiceBean implements NoteService {
     @Override
     public Author create(String username, Note note) {
         log.info("create() - start: username = {}, note = {}", username, note);
-        note.setTitle(note.getTitle().trim());
-        Author author = getAuthorByUsername(username.trim());
+        trimNote(note);
+        var author = getAuthorByUsername(username);
         note.setNoteAuthor(author);
         author.getNotes().add(note);
         log.info("create() - end: author = {}", author);
@@ -63,13 +63,14 @@ public class NoteServiceBean implements NoteService {
     @Override
     public Note update(String username, Integer id, Note note) {
         log.info("update() - start: username = {}, id = {}, note = {}", username, id, note);
-        Note newNote = getNoteByIdAndAuthorUsername(username, id);
+        var newNote = getNoteByIdAndAuthorUsername(username, id);
+        trimNote(note);
 
-        if (note.getTitle() != null && note.getTitle().trim().length() > 0) {
-            newNote.setTitle(note.getTitle().trim());
+        if (note.getTitle() != null && note.getTitle().length() > 0) {
+            newNote.setTitle(note.getTitle());
         }
-        if (note.getDescription() != null && note.getDescription().trim().length() > 0) {
-            newNote.setDescription(note.getDescription().trim());
+        if (note.getDescription() != null && note.getDescription().length() > 0) {
+            newNote.setDescription(note.getDescription());
         }
         if (note.getType() != null) {
             newNote.setType(note.getType());
@@ -85,7 +86,7 @@ public class NoteServiceBean implements NoteService {
     @Override
     public void delete(String username, Integer id) {
         log.info("delete() - start: username = {}, id = {}", username, id);
-        Note note = getNoteByIdAndAuthorUsername(username, id);
+        var note = getNoteByIdAndAuthorUsername(username, id);
         note.setIsDeleted(Boolean.TRUE);
         noteRepository.save(note);
         log.info("delete() - end: isDeleted = {}", note.getIsDeleted());
@@ -131,6 +132,11 @@ public class NoteServiceBean implements NoteService {
     private Note getNoteByIdAndAuthorUsername(String username, Integer id) {
         return noteRepository.findNoteByIdAndAuthorUsername(username, id)
                 .orElseThrow(ResourceNotFoundException::new);
+    }
+
+    private void trimNote(Note note) {
+        if (note.getTitle() != null) note.setTitle(note.getTitle().trim());
+        if (note.getDescription() != null) note.setDescription(note.getDescription().trim());
     }
 
 }
