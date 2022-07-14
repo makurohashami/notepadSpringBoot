@@ -10,17 +10,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Log4j2
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    //todo fix time for all
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> globalExceptionHandler(WebRequest request, Exception ex) {
         Error error = new Error(
-                new Date(),
+                Date.from(Instant.now()),
                 "All bad. Backend error" + " Class: " + ex.getClass().getName() + " Message: " + ex.getMessage(),
                 request.getDescription(false));
 
@@ -31,7 +33,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> methodArgumentNotValidException(MethodArgumentNotValidException ex, WebRequest request) {
         Error errorDetails = new Error(
-                new Date(),
+                Date.from(Instant.now()),
                 "Validation failed: " + ex.getBindingResult().getFieldError().getField() + " " + ex.getBindingResult().getFieldError().getDefaultMessage(),
                 request.getDescription(false));
 
@@ -42,7 +44,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UsernameAlreadyExistsException.class)
     public ResponseEntity<?> methodUsernameAlreadyExistsException(WebRequest request) {
         Error error = new Error(
-                new Date(),
+                Date.from(Instant.now()),
                 "This username is already taken",
                 request.getDescription(false));
 
@@ -53,7 +55,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<?> methodEmailAlreadyExistsException(WebRequest request) {
         Error error = new Error(
-                new Date(),
+                Date.from(Instant.now()),
                 "This email is already taken",
                 request.getDescription(false));
 
@@ -64,7 +66,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> methodResourceNotFoundException(WebRequest request) {
         Error error = new Error(
-                new Date(),
+                Date.from(Instant.now()),
                 "Resource not found",
                 request.getDescription(false));
 
@@ -75,7 +77,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<?> methodHttpMessageNotReadableException(WebRequest request) {
         Error error = new Error(
-                new Date(),
+                Date.from(Instant.now()),
                 "Bad request",
                 request.getDescription(false));
 
@@ -86,7 +88,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> methodMethodArgumentTypeMismatchException(WebRequest request) {
         Error error = new Error(
-                new Date(),
+                Date.from(Instant.now()),
                 "Bad enum in request",
                 request.getDescription(false));
 
