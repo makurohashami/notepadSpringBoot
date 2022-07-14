@@ -25,6 +25,11 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
     @Modifying
     @Transactional
     @Query("update Note n set n.isDeleted = true where n.noteAuthor.username = :username")
-    void deleteNotesByAuthorsUsername(String username);
+    void deleteNotesByAuthorUsername(String username);
+
+    @Modifying
+    @Transactional
+    @Query("update Note n set n.isDeleted = true where n.noteAuthor.id = :id")
+    void deleteNotesByAuthorId(Integer id);
 
 }
