@@ -25,4 +25,7 @@ public interface NoteService {
 
     Collection<Note> readByType(String username, NoteType type);
 
+    Collection<Note> readAllExpired(String username);
+    Collection<Note> readAllNotExpired(String username);
+
 }

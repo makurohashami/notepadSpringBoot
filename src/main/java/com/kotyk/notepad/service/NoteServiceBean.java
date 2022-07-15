@@ -11,8 +11,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 @Service
 @AllArgsConstructor
@@ -78,6 +80,9 @@ public class NoteServiceBean implements NoteService {
         if (note.getStatus() != null) {
             newNote.setStatus(note.getStatus());
         }
+        if (note.getEndTime() != null) {
+            newNote.setEndTime(note.getEndTime());
+        }
 
         log.info("update() - end: note = {}", newNote);
         return noteRepository.save(newNote);
@@ -119,6 +124,34 @@ public class NoteServiceBean implements NoteService {
         }
         log.info("readByType() - end: notes = {}", notes);
 
+        return notes;
+    }
+
+    @Override
+    public Collection<Note> readAllExpired(String username) {
+        log.info("readAllExpired() - start: username = {}", username);
+        var author = getAuthorByUsername(username);
+        Collection<Note> notes = new ArrayList<>();
+        for(Note note: author.getNotes()) {
+            if(note.getEndTime() != null && note.getEndTime().before(Date.from(Instant.now())) ) {
+                notes.add(note);
+            }
+        }
+        log.info("readAllExpired() - end: notes = {}", notes);
+        return notes;
+    }
+
+    @Override
+    public Collection<Note> readAllNotExpired(String username) {
+        log.info("readAllNotExpired() - start: username = {}", username);
+        var author = getAuthorByUsername(username);
+        Collection<Note> notes = new ArrayList<>();
+        for(Note note: author.getNotes()) {
+            if(note.getEndTime() == null || note.getEndTime().after(Date.from(Instant.now())) ) {
+                notes.add(note);
+            }
+        }
+        log.info("readAllNotExpired() - end: notes = {}", notes);
         return notes;
     }
 

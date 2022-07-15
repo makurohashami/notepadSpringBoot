@@ -116,4 +116,27 @@ public class NoteController implements NoteSwagger {
         return dto;
     }
 
+
+    @GetMapping("{username}/notes/expired")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<NoteReadDto> viewExpiredNotes(@PathVariable String username) {
+        log.debug("viewExpiredNotes() Controller - start: username = {}", username);
+        var note = noteService.readAllExpired(username);
+        var dto = NoteMapper.INSTANCE.notesToReads(note);
+        log.debug("viewExpiredNotes() Controller - end: notes count = {}", dto.size());
+
+        return dto;
+    }
+
+    @GetMapping("{username}/notes/notExpired")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<NoteReadDto> viewNotExpiredNotes(@PathVariable String username) {
+        log.debug("viewNotExpiredNotes() Controller - start: username = {}", username);
+        var note = noteService.readAllNotExpired(username);
+        var dto = NoteMapper.INSTANCE.notesToReads(note);
+        log.debug("viewNotExpiredNotes() Controller - end: notes count = {}", dto.size());
+
+        return dto;
+    }
+
 }

@@ -30,6 +30,9 @@ public class NoteDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     @Schema(description = "Date of creation", example = "2022-11-15 12:36", required = true)
     public Date timeOfCreation = Date.from(Instant.now());
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+    @Schema(description = "End time", example = "2022-11-15 12:36", required = true)
+    public Date endTime;
     @JsonIgnore
     public Boolean isDeleted = Boolean.FALSE;
 

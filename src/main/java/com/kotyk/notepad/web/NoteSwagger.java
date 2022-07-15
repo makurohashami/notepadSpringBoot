@@ -1,5 +1,6 @@
 package com.kotyk.notepad.web;
 
+import com.kotyk.notepad.domain.Note;
 import com.kotyk.notepad.domain.NoteStatus;
 import com.kotyk.notepad.domain.NoteType;
 import com.kotyk.notepad.dto.author.AuthorReadDto;
@@ -69,4 +70,16 @@ public interface NoteSwagger {
             @ApiResponse(responseCode = "200", description = "OK. View notes"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Author not found", content = @Content(schema = @Schema(implementation = Error.class)))})
     Collection<NoteReadDto> viewNotesByType(String username, NoteType type);
+
+    @Operation(summary = "This is endpoint to view all expired notes of author by username", description = "Create request to view all expired notes", tags = {"Notes"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. View notes"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Author not found", content = @Content(schema = @Schema(implementation = Error.class)))})
+    Collection<Note> readAllExpired(String username);
+
+    @Operation(summary = "This is endpoint to view all not expired notes of author by username", description = "Create request to view all not expired notes", tags = {"Notes"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. View notes"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Author not found", content = @Content(schema = @Schema(implementation = Error.class)))})
+    Collection<Note> readAllNotExpired(String username);
 }

@@ -25,6 +25,7 @@ public class Note {
     private NoteType type;
     private NoteStatus status;
     private Date timeOfCreation;
+    private Date endTime;
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
     @ToString.Exclude
