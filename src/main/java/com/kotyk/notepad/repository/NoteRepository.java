@@ -22,14 +22,10 @@ public interface NoteRepository extends JpaRepository<Note, Integer> {
     @Query("select n from Note n where n.noteAuthor.username = :username and n.isDeleted = false and n.noteAuthor.isDeleted = false order by n.timeOfCreation asc")
     List<Note> findAll(String username);
 
+    //todo write a work query to DB
     @Modifying
     @Transactional
     @Query("update Note n set n.isDeleted = true where n.noteAuthor.username = :username")
     void deleteNotesByAuthorUsername(String username);
-
-    @Modifying
-    @Transactional
-    @Query("update Note n set n.isDeleted = true where n.noteAuthor.id = :id")
-    void deleteNotesByAuthorId(Integer id);
 
 }

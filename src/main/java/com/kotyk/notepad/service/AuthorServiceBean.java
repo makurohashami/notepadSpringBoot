@@ -1,6 +1,7 @@
 package com.kotyk.notepad.service;
 
 import com.kotyk.notepad.domain.Author;
+import com.kotyk.notepad.domain.Note;
 import com.kotyk.notepad.repository.AuthorRepository;
 import com.kotyk.notepad.repository.NoteRepository;
 import com.kotyk.notepad.util.exception.EmailAlreadyExistsException;
@@ -73,12 +74,12 @@ public class AuthorServiceBean implements AuthorService {
 
     @Override
     public void delete(String username) {
-        //todo fix exception
         log.info("delete() - start: username = {}", username);
         var author = getAuthorByUsername(username);
         author.setIsDeleted(Boolean.TRUE);
-        noteRepository.deleteNotesByAuthorUsername(username);
-        //noteRepository.deleteNotesByAuthorId(author.getId());
+        for(Note note: author.getNotes()) {
+            note.setIsDeleted(Boolean.TRUE);
+        }
         log.info("delete() - end: isDeleted = {}", author.getIsDeleted());
         authorRepository.save(author);
     }
