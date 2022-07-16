@@ -29,4 +29,13 @@ public interface NoteService {
 
     Collection<Note> readAllNotExpired(String username);
 
+    Note updateSetIsDone(String username, Integer id);
+
+    Note updateSetNotDone(String username, Integer id);
+
+    Collection<Note> readAllIsDone(String username);
+
+    Collection<Note> readAllNotDone(String username);
+
+
 }

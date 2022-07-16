@@ -81,4 +81,29 @@ public interface NoteSwagger {
             @ApiResponse(responseCode = "200", description = "OK. View notes"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND. Author not found", content = @Content(schema = @Schema(implementation = Error.class)))})
     Collection<NoteReadDto> viewNotExpiredNotes(String username);
+
+    @Operation(summary = "This is endpoint to set true for isDone note", description = "Create request to set isDome = true", tags = {"Notes"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. View note"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Author not found", content = @Content(schema = @Schema(implementation = Error.class)))})
+    NoteReadDto setIsDone(String username, Integer id);
+
+    @Operation(summary = "This is endpoint to set false for isDone note", description = "Create request to set isDome = false", tags = {"Notes"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. View note"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Author not found", content = @Content(schema = @Schema(implementation = Error.class)))})
+    NoteReadDto setNotDone(String username, Integer id);
+
+    @Operation(summary = "This is endpoint to view all done notes of author by username", description = "Create request to view all done notes", tags = {"Notes"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. View notes"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Author not found", content = @Content(schema = @Schema(implementation = Error.class)))})
+    Collection<NoteReadDto> viewAllDone(String username);
+
+    @Operation(summary = "This is endpoint to view all not done notes of author by username", description = "Create request to view all not done notes", tags = {"Notes"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK. View notes"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND. Author not found", content = @Content(schema = @Schema(implementation = Error.class)))})
+    Collection<NoteReadDto> viewAllNotDone(String username);
+
 }

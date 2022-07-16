@@ -83,6 +83,9 @@ public class NoteServiceBean implements NoteService {
         if (note.getEndTime() != null) {
             newNote.setEndTime(note.getEndTime());
         }
+        if (note.getIsDone() != null) {
+            newNote.setIsDone(note.getIsDone());
+        }
 
         log.info("update() - end: note = {}", newNote);
         return noteRepository.save(newNote);
@@ -133,7 +136,7 @@ public class NoteServiceBean implements NoteService {
         var author = getAuthorByUsername(username);
         Collection<Note> notes = new ArrayList<>();
         for (Note note : author.getNotes()) {
-            if (note.getEndTime() != null && note.getEndTime().before(Date.from(Instant.now()))) {
+            if (note.getEndTime() != null && note.getEndTime().before(Date.from(Instant.now())) && note.getIsDone().equals(Boolean.FALSE) && note.getIsDeleted().equals(Boolean.FALSE)) {
                 notes.add(note);
             }
         }
@@ -147,11 +150,57 @@ public class NoteServiceBean implements NoteService {
         var author = getAuthorByUsername(username);
         Collection<Note> notes = new ArrayList<>();
         for (Note note : author.getNotes()) {
-            if (note.getEndTime() == null || note.getEndTime().after(Date.from(Instant.now()))) {
+            if (note.getEndTime() == null || note.getEndTime().after(Date.from(Instant.now())) && note.getIsDone().equals(Boolean.FALSE) && note.getIsDeleted().equals(Boolean.FALSE)) {
                 notes.add(note);
             }
         }
         log.info("readAllNotExpired() - end: notes = {}", notes);
+        return notes;
+    }
+
+    @Override
+    public Note updateSetIsDone(String username, Integer id) {
+        log.info("updateSetIsDone() - start: username = {}, id = {}", username, id);
+        var note = getNoteByIdAndAuthorUsername(username, id);
+        note.setIsDone(Boolean.TRUE);
+        log.info("updateSetIsDone() - end: note = {}", note);
+        return noteRepository.save(note);
+    }
+
+    @Override
+    public Note updateSetNotDone(String username, Integer id) {
+        log.info("updateSetNotDone() - start: username = {}, id = {}", username, id);
+        var note = getNoteByIdAndAuthorUsername(username, id);
+        note.setIsDone(Boolean.FALSE);
+        log.info("updateSetNotDone() - end: note = {}", note);
+        return noteRepository.save(note);
+    }
+
+    @Override
+    public Collection<Note> readAllIsDone(String username) {
+        log.info("readAllIsDone() - start: username = {}", username);
+        var author = getAuthorByUsername(username);
+        Collection<Note> notes = new ArrayList<>();
+        for (Note note : author.getNotes()) {
+            if (note.getIsDone().equals(Boolean.TRUE) && note.getIsDeleted().equals(Boolean.FALSE)) {
+                notes.add(note);
+            }
+        }
+        log.info("readAllIsDone() - end: notes = {}", notes);
+        return notes;
+    }
+
+    @Override
+    public Collection<Note> readAllNotDone(String username) {
+        log.info("readAllNotDone() - start: username = {}", username);
+        var author = getAuthorByUsername(username);
+        Collection<Note> notes = new ArrayList<>();
+        for (Note note : author.getNotes()) {
+            if (note.getIsDone().equals(Boolean.FALSE) && note.getIsDeleted().equals(Boolean.FALSE)) {
+                notes.add(note);
+            }
+        }
+        log.info("readAllNotDone() - end: notes = {}", notes);
         return notes;
     }
 

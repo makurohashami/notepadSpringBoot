@@ -139,4 +139,48 @@ public class NoteController implements NoteSwagger {
         return dto;
     }
 
+    @PatchMapping("{username}/notes/{id}/setDone")
+    @ResponseStatus(HttpStatus.OK)
+    public NoteReadDto setIsDone(@PathVariable("username") String username, @PathVariable("id") Integer id) {
+        log.debug("setIsDone() Controller - start: username = {}, id = {}", username, id);
+        var note = noteService.updateSetIsDone(username, id);
+        var dto = NoteMapper.INSTANCE.noteToRead(note);
+        log.debug("setIsDone() Controller - end: isDone = {}", dto.isDone);
+
+        return dto;
+    }
+
+    @PatchMapping("{username}/notes/{id}/setNotDone")
+    @ResponseStatus(HttpStatus.OK)
+    public NoteReadDto setNotDone(@PathVariable("username") String username, @PathVariable("id") Integer id) {
+        log.debug("setNotDone() Controller - start: username = {}, id = {}", username, id);
+        var note = noteService.updateSetNotDone(username, id);
+        var dto = NoteMapper.INSTANCE.noteToRead(note);
+        log.debug("setNotDone() Controller - end: isDone = {}", dto.isDone);
+
+        return dto;
+    }
+
+    @GetMapping("{username}/notes/done")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<NoteReadDto> viewAllDone(@PathVariable("username") String username) {
+        log.debug("viewAllDone() Controller - start: username = {}", username);
+        var notes = noteService.readAllIsDone(username);
+        var dto = NoteMapper.INSTANCE.notesToReads(notes);
+        log.debug("viewAllDone() Controller - end: notes count = {}", dto.size());
+
+        return dto;
+    }
+
+    @GetMapping("{username}/notes/notDone")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<NoteReadDto> viewAllNotDone(@PathVariable("username") String username) {
+        log.debug("viewAllNotDone() Controller - start: username = {}", username);
+        var notes = noteService.readAllNotDone(username);
+        var dto = NoteMapper.INSTANCE.notesToReads(notes);
+        log.debug("viewAllNotDone() Controller - end: notes count = {}", dto.size());
+
+        return dto;
+    }
+
 }

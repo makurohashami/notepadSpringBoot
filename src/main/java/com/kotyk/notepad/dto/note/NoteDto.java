@@ -34,6 +34,9 @@ public class NoteDto {
     @Schema(description = "End time", example = "2022-11-15 12:36", required = true)
     public Date endTime;
     @JsonIgnore
+    @Schema(description = "Note completion status", example = "true", required = true)
+    public Boolean isDone = Boolean.FALSE;
+    @JsonIgnore
     public Boolean isDeleted = Boolean.FALSE;
 
 }
