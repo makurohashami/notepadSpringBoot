@@ -37,7 +37,7 @@ public class NoteController implements NoteSwagger {
         return dto;
     }
 
-    @GetMapping("{username}/notes/{id}")
+    @GetMapping("{username}/notes/id/{id}")
     @ResponseStatus(HttpStatus.OK)
     public NoteReadDto viewNote(@PathVariable("username") String username, @PathVariable("id") Integer id) {
         log.debug("viewNote() Controller - start: username = {}, id = {}", username, id);
