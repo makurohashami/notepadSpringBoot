@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.Collection;
 
-@Tag(name = "Authors", description = "CRUDs for authors")
+@Tag(name = "Authors", description = "CRUD for authors")
 public interface AuthorSwagger {
 
     @Operation(summary = "This is endpoint to add a new author", description = "Create request to add a new author", tags = {"Authors"})

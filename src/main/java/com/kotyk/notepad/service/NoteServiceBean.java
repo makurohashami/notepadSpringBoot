@@ -102,8 +102,8 @@ public class NoteServiceBean implements NoteService {
         log.info("readByStatus() - start: username = {}, status = {}", username, status);
         var author = getAuthorByUsername(username);
         Collection<Note> notes = new ArrayList<>();
-        for(Note note: author.getNotes()) {
-            if(note.getStatus().equals(status) && note.getIsDeleted().equals(Boolean.FALSE)) {
+        for (Note note : author.getNotes()) {
+            if (note.getStatus().equals(status) && note.getIsDeleted().equals(Boolean.FALSE)) {
                 notes.add(note);
             }
         }
@@ -117,8 +117,8 @@ public class NoteServiceBean implements NoteService {
         log.info("readByType() - start: username = {}, type = {}", username, type);
         var author = getAuthorByUsername(username);
         Collection<Note> notes = new ArrayList<>();
-        for(Note note: author.getNotes()) {
-            if(note.getType().equals(type) && note.getIsDeleted().equals(Boolean.FALSE)) {
+        for (Note note : author.getNotes()) {
+            if (note.getType().equals(type) && note.getIsDeleted().equals(Boolean.FALSE)) {
                 notes.add(note);
             }
         }
@@ -132,8 +132,8 @@ public class NoteServiceBean implements NoteService {
         log.info("readAllExpired() - start: username = {}", username);
         var author = getAuthorByUsername(username);
         Collection<Note> notes = new ArrayList<>();
-        for(Note note: author.getNotes()) {
-            if(note.getEndTime() != null && note.getEndTime().before(Date.from(Instant.now())) ) {
+        for (Note note : author.getNotes()) {
+            if (note.getEndTime() != null && note.getEndTime().before(Date.from(Instant.now()))) {
                 notes.add(note);
             }
         }
@@ -146,8 +146,8 @@ public class NoteServiceBean implements NoteService {
         log.info("readAllNotExpired() - start: username = {}", username);
         var author = getAuthorByUsername(username);
         Collection<Note> notes = new ArrayList<>();
-        for(Note note: author.getNotes()) {
-            if(note.getEndTime() == null || note.getEndTime().after(Date.from(Instant.now())) ) {
+        for (Note note : author.getNotes()) {
+            if (note.getEndTime() == null || note.getEndTime().after(Date.from(Instant.now()))) {
                 notes.add(note);
             }
         }
