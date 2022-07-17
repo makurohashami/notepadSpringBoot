@@ -40,7 +40,7 @@ public class AuthorServiceBean implements AuthorService {
     public Author read(String username) {
         log.info("read() - start: username = {}", username);
         var author = getAuthorByUsername(username);
-        log.info("read() - end: author = {}", author);
+        log.info("read() - end: author's username = {}", author.getUsername());
         return author;
     }
 
@@ -57,18 +57,18 @@ public class AuthorServiceBean implements AuthorService {
         log.info("update() - start: username = {}, author = {}", username, author);
         var newAuthor = getAuthorByUsername(username);
         trimAuthor(author);
-        if (author.getUsername() != null && author.getUsername().length() > 0 && isUsernameNotTaken(author.getUsername())) {
+        if (isNotNull(author.getUsername()) && !author.getUsername().isBlank() && isUsernameNotTaken(author.getUsername())) {
             newAuthor.setUsername(author.getUsername());
         }
-        if (author.getName() != null && author.getName().length() > 0) {
+        if (isNotNull(author.getName()) && !author.getName().isBlank()) {
             newAuthor.setName(author.getName());
         }
-        if (author.getEmail() != null && isEmailNotTaken(author.getEmail())) {
+        if (isNotNull(author.getEmail()) && isEmailNotTaken(author.getEmail())) {
             Pattern pattern = Pattern.compile("^[A-Za-z\\d+_.-]+@(.+)");
             Matcher matcher = pattern.matcher(author.getEmail());
             if (matcher.matches()) newAuthor.setEmail(author.getEmail());
         }
-        log.info("update() - end: new author = {}", newAuthor);
+        log.info("update() - end: author's username = {}", author.getUsername());
         return authorRepository.save(newAuthor);
     }
 
@@ -77,7 +77,7 @@ public class AuthorServiceBean implements AuthorService {
         log.info("delete() - start: username = {}", username);
         var author = getAuthorByUsername(username);
         author.setIsDeleted(Boolean.TRUE);
-        for(Note note: author.getNotes()) {
+        for (Note note : author.getNotes()) {
             note.setIsDeleted(Boolean.TRUE);
         }
         log.info("delete() - end: isDeleted = {}", author.getIsDeleted());
@@ -86,11 +86,15 @@ public class AuthorServiceBean implements AuthorService {
 
     ///---Technical---\\\
 
-    private Author getAuthorByUsername(String username) {
+    protected Author getAuthorByUsername(String username) {
         var author = authorRepository.findByUsername(username)
                 .orElseThrow(ResourceNotFoundException::new);
         author.setNotes(noteRepository.findAll(username));
         return author;
+    }
+
+    protected Boolean isNotNull(Object obj) {
+        return obj != null;
     }
 
     private Boolean isUsernameNotTaken(String username) {

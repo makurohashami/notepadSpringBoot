@@ -25,11 +25,11 @@ public class AuthorController implements AuthorSwagger {
     @PostMapping("/authors")
     @ResponseStatus(HttpStatus.CREATED)
     public AuthorDto addAuthor(@RequestBody @Valid AuthorDto authorDto) {
-        log.debug("addAuthor() Controller - start: authorDto = {}", authorDto);
+        log.debug("Controller: addAuthor() - start: authorDto = {}", authorDto);
         var author = AuthorMapper.INSTANCE.dtoToAuthor(authorDto);
         var dto = AuthorMapper.INSTANCE.authorToDto(authorService.create(author));
 
-        log.debug("addAuthor() Controller - end: authorDto = {}", dto);
+        log.debug("Controller: addAuthor() - end: author = {}", dto);
         return dto;
     }
 
@@ -40,38 +40,38 @@ public class AuthorController implements AuthorSwagger {
         var author = authorService.read(username);
         var dto = AuthorMapper.INSTANCE.authorToReadDto(author);
 
-        log.debug("readAuthor() Controller - end: Author = {}", dto);
+        log.debug("readAuthor() Controller - end: author = {}", dto);
         return dto;
     }
 
     @GetMapping("/authors")
     @ResponseStatus(HttpStatus.OK)
     public Collection<AuthorDto> readAuthors() {
-        log.debug("readAuthors() Controller - start:");
+        log.debug("Controller: readAuthors() - start:");
         var authors = authorService.readAll();
         var dto = AuthorMapper.INSTANCE.authorsToDtos(authors);
 
-        log.debug("readAuthors() Controller - end: authors size = {}", dto.size());
+        log.debug("Controller: readAuthors() - end: authors = {}", dto);
         return dto;
     }
 
     @PatchMapping("/authors/{username}")
     @ResponseStatus(HttpStatus.OK)
     public AuthorDto patchAuthor(@PathVariable String username, @RequestBody /*@Valid*/ AuthorDto authorDto) {
-        log.debug("patchAuthor() Controller - start: username = {}, authorDto = {}", username, authorDto);
+        log.debug("Controller: patchAuthor() - start: username = {}, authorDto = {}", username, authorDto);
         var author = AuthorMapper.INSTANCE.dtoToAuthor(authorDto);
         var dto = AuthorMapper.INSTANCE.authorToDto(authorService.update(username, author));
 
-        log.debug("patchAuthor() Controller - end: author = {}", dto);
+        log.debug("Controller: patchAuthor() - end: author = {}", dto);
         return dto;
     }
 
     @DeleteMapping("/authors/{username}")
     @ResponseStatus(HttpStatus.GONE)
     public AuthorDeleteDto deleteAuthor(@PathVariable String username) {
-        log.debug("deleteAuthor() Controller - start: username = {}", username);
+        log.debug("Controller: deleteAuthor() - start: username = {}", username);
         authorService.delete(username);
-        log.debug("deleteAuthor() Controller - end: Author was deleted successfully");
+        log.debug("Controller: deleteAuthor() - end: Author was deleted successfully");
         return new AuthorDeleteDto(username);
     }
 
