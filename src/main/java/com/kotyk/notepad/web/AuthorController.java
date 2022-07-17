@@ -57,7 +57,7 @@ public class AuthorController implements AuthorSwagger {
 
     @PatchMapping("/authors/{username}")
     @ResponseStatus(HttpStatus.OK)
-    public AuthorDto patchAuthor(@PathVariable String username, @RequestBody /*@Valid*/ AuthorDto authorDto) {
+    public AuthorDto patchAuthor(@PathVariable String username, @RequestBody AuthorDto authorDto) {
         log.debug("Controller: patchAuthor() - start: username = {}, authorDto = {}", username, authorDto);
         var author = AuthorMapper.INSTANCE.dtoToAuthor(authorDto);
         var dto = AuthorMapper.INSTANCE.authorToDto(authorService.update(username, author));

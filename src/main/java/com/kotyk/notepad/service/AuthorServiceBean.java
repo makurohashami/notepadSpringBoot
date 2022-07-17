@@ -26,7 +26,7 @@ public class AuthorServiceBean implements AuthorService {
 
     @Override
     public Author create(Author author) {
-        log.info("create() - start: author = {}", author);
+        log.info("create() - start: username = {}", author.getUsername());
         trimAuthor(author);
         if (isUsernameNotTaken(author.getUsername()) && isEmailNotTaken(author.getEmail())) {
             var saved = authorRepository.save(author);
@@ -54,7 +54,7 @@ public class AuthorServiceBean implements AuthorService {
 
     @Override
     public Author update(String username, Author author) {
-        log.info("update() - start: username = {}, author = {}", username, author);
+        log.info("update() - start: username = {}, username = {}", username, author.getUsername());
         var newAuthor = getAuthorByUsername(username);
         trimAuthor(author);
         if (isNotNull(author.getUsername()) && !author.getUsername().isBlank() && isUsernameNotTaken(author.getUsername())) {
