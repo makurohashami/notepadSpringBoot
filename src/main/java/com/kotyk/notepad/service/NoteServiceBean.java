@@ -42,7 +42,7 @@ public class NoteServiceBean implements NoteService {
     public Note read(String username, Integer id) {
         log.info("read() - start: username = {}, id = {}", username, id);
         var note = getNoteByIdAndAuthorUsername(username, id);
-        log.info("read() - end: id = {}", note.getId());
+        log.info("read() - end: title = {}", note.getTitle());
 
         return note;
     }

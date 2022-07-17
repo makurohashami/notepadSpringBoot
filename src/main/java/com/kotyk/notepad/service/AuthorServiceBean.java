@@ -64,7 +64,7 @@ public class AuthorServiceBean implements AuthorService {
             newAuthor.setName(author.getName());
         }
         if (isNotNull(author.getEmail()) && isEmail(author.getEmail()) && isEmailNotTaken(author.getEmail())) {
-           newAuthor.setEmail(author.getEmail());
+            newAuthor.setEmail(author.getEmail());
         }
         log.info("update() - end: author's username = {}", author.getUsername());
         return authorRepository.save(newAuthor);

@@ -37,40 +37,7 @@ public class NoteController implements NoteSwagger {
         return dto;
     }
 
-    @GetMapping("{username}/notes/id/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public NoteReadDto viewNote(@PathVariable("username") String username, @PathVariable("id") Integer id) {
-        log.debug("Controller: viewNote() - start: username = {}, id = {}", username, id);
-        var note = noteService.read(username, id);
-        var dto = NoteMapper.INSTANCE.noteToRead(note);
-        log.debug("Controller: viewNote() - end: note = {}", dto);
-
-        return dto;
-    }
-
-    @GetMapping("{username}/notes/title/{title}")
-    @ResponseStatus(HttpStatus.OK)
-    public Collection<NoteReadDto> viewNotesByTitle(@PathVariable("username") String username, @PathVariable("title") String title) {
-        log.debug("Controller: viewNotesByTitle()- start: username = {}, title = {}", username, title);
-        var notes = noteService.readByTitle(username, title);
-        var dto = NoteMapper.INSTANCE.notesToReads(notes);
-        log.debug("Controller: viewNotesByTitle() - end: notes = {}", dto);
-
-        return dto;
-    }
-
-    @GetMapping("{username}/notes")
-    @ResponseStatus(HttpStatus.OK)
-    public Collection<NoteDto> viewNotes(@PathVariable("username") String username) {
-        log.debug("Controller: viewNotes() - start: username = {}", username);
-        var notes = noteService.readAll(username);
-        var dto = NoteMapper.INSTANCE.notesToDtos(notes);
-        log.debug("Controller: viewNotes() - end: notes = {}", dto);
-
-        return dto;
-    }
-
-    @PatchMapping("{username}/notes/{id}")
+    @PatchMapping("/{username}/notes/{id}")
     @ResponseStatus(HttpStatus.OK)
     public NoteDto patchNote(@PathVariable("username") String username,
                              @PathVariable("id") Integer id,
@@ -85,7 +52,29 @@ public class NoteController implements NoteSwagger {
 
     }
 
-    @DeleteMapping("{username}/notes/{id}")
+    @PatchMapping("/{username}/notes/{id}/setDone")
+    @ResponseStatus(HttpStatus.OK)
+    public NoteReadDto setIsDone(@PathVariable("username") String username, @PathVariable("id") Integer id) {
+        log.debug("Controller: setIsDone() - start: username = {}, id = {}", username, id);
+        var note = noteService.updateSetIsDone(username, id);
+        var dto = NoteMapper.INSTANCE.noteToRead(note);
+        log.debug("Controller: setIsDone() - end: note = {}", dto);
+
+        return dto;
+    }
+
+    @PatchMapping("/{username}/notes/{id}/setNotDone")
+    @ResponseStatus(HttpStatus.OK)
+    public NoteReadDto setNotDone(@PathVariable("username") String username, @PathVariable("id") Integer id) {
+        log.debug("Controller: setNotDone() - start: username = {}, id = {}", username, id);
+        var note = noteService.updateSetNotDone(username, id);
+        var dto = NoteMapper.INSTANCE.noteToRead(note);
+        log.debug("Controller: setNotDone() - end: note = {}", dto);
+
+        return dto;
+    }
+
+    @DeleteMapping("/{username}/notes/{id}")
     @ResponseStatus(HttpStatus.GONE)
     public NoteDeleteDto deleteNote(@PathVariable("username") String username, @PathVariable("id") Integer id) {
         log.debug("Controller: deleteNote() - start: username = {}, id = {}", username, id);
@@ -94,7 +83,40 @@ public class NoteController implements NoteSwagger {
         return new NoteDeleteDto(id);
     }
 
-    @GetMapping("{username}/notes/status/{status}")
+    @GetMapping("/{username}/notes/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public NoteReadDto viewNote(@PathVariable("username") String username, @PathVariable("id") Integer id) {
+        log.debug("Controller: viewNote() - start: username = {}, id = {}", username, id);
+        var note = noteService.read(username, id);
+        var dto = NoteMapper.INSTANCE.noteToRead(note);
+        log.debug("Controller: viewNote() - end: note = {}", dto);
+
+        return dto;
+    }
+
+    @GetMapping("/{username}/notes/title/{title}")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<NoteReadDto> viewNotesByTitle(@PathVariable("username") String username, @PathVariable("title") String title) {
+        log.debug("Controller: viewNotesByTitle()- start: username = {}, title = {}", username, title);
+        var notes = noteService.readByTitle(username, title);
+        var dto = NoteMapper.INSTANCE.notesToReads(notes);
+        log.debug("Controller: viewNotesByTitle() - end: notes = {}", dto);
+
+        return dto;
+    }
+
+    @GetMapping("/{username}/notes")
+    @ResponseStatus(HttpStatus.OK)
+    public Collection<NoteDto> viewNotes(@PathVariable("username") String username) {
+        log.debug("Controller: viewNotes() - start: username = {}", username);
+        var notes = noteService.readAll(username);
+        var dto = NoteMapper.INSTANCE.notesToDtos(notes);
+        log.debug("Controller: viewNotes() - end: notes = {}", dto);
+
+        return dto;
+    }
+
+    @GetMapping("/{username}/notes/status/{status}")
     @ResponseStatus(HttpStatus.OK)
     public Collection<NoteReadDto> viewNotesByStatus(@PathVariable("username") String username, @PathVariable("status") NoteStatus status) {
         log.debug("Controller: viewNotesByStatus() - start: username = {}, status = {}", username, status);
@@ -105,7 +127,7 @@ public class NoteController implements NoteSwagger {
         return dto;
     }
 
-    @GetMapping("{username}/notes/type/{type}")
+    @GetMapping("/{username}/notes/type/{type}")
     @ResponseStatus(HttpStatus.OK)
     public Collection<NoteReadDto> viewNotesByType(@PathVariable("username") String username, @PathVariable("type") NoteType type) {
         log.debug("Controller: viewNotesByType() - start: username = {}, type = {}", username, type);
@@ -117,7 +139,7 @@ public class NoteController implements NoteSwagger {
     }
 
 
-    @GetMapping("{username}/notes/expired")
+    @GetMapping("/{username}/notes/expired")
     @ResponseStatus(HttpStatus.OK)
     public Collection<NoteReadDto> viewExpiredNotes(@PathVariable String username) {
         log.debug("Controller: viewExpiredNotes() - start: username = {}", username);
@@ -128,7 +150,7 @@ public class NoteController implements NoteSwagger {
         return dto;
     }
 
-    @GetMapping("{username}/notes/notExpired")
+    @GetMapping("/{username}/notes/notExpired")
     @ResponseStatus(HttpStatus.OK)
     public Collection<NoteReadDto> viewNotExpiredNotes(@PathVariable String username) {
         log.debug("Controller: viewNotExpiredNotes() - start: username = {}", username);
@@ -139,29 +161,7 @@ public class NoteController implements NoteSwagger {
         return dto;
     }
 
-    @PatchMapping("{username}/notes/{id}/setDone")
-    @ResponseStatus(HttpStatus.OK)
-    public NoteReadDto setIsDone(@PathVariable("username") String username, @PathVariable("id") Integer id) {
-        log.debug("Controller: setIsDone() - start: username = {}, id = {}", username, id);
-        var note = noteService.updateSetIsDone(username, id);
-        var dto = NoteMapper.INSTANCE.noteToRead(note);
-        log.debug("Controller: setIsDone() - end: note = {}", dto);
-
-        return dto;
-    }
-
-    @PatchMapping("{username}/notes/{id}/setNotDone")
-    @ResponseStatus(HttpStatus.OK)
-    public NoteReadDto setNotDone(@PathVariable("username") String username, @PathVariable("id") Integer id) {
-        log.debug("Controller: setNotDone() - start: username = {}, id = {}", username, id);
-        var note = noteService.updateSetNotDone(username, id);
-        var dto = NoteMapper.INSTANCE.noteToRead(note);
-        log.debug("Controller: setNotDone() - end: note = {}", dto);
-
-        return dto;
-    }
-
-    @GetMapping("{username}/notes/done")
+    @GetMapping("/{username}/notes/done")
     @ResponseStatus(HttpStatus.OK)
     public Collection<NoteReadDto> viewAllDone(@PathVariable("username") String username) {
         log.debug("Controller: viewAllDone() - start: username = {}", username);
@@ -172,7 +172,7 @@ public class NoteController implements NoteSwagger {
         return dto;
     }
 
-    @GetMapping("{username}/notes/notDone")
+    @GetMapping("/{username}/notes/notDone")
     @ResponseStatus(HttpStatus.OK)
     public Collection<NoteReadDto> viewAllNotDone(@PathVariable("username") String username) {
         log.debug("Controller: viewAllNotDone() - start: username = {}", username);

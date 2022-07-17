@@ -23,7 +23,7 @@ logging:
   level:
     org.springframework: info
     org.hibernate: info
-    com.kotyk.notepad: debug
+    com.kotyk.notepad: info
 # swagger-ui custom path
 springdoc:
   swagger-ui:

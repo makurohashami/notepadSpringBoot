@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> methodMethodArgumentTypeMismatchException(WebRequest request) {
         Error error = new Error(
                 Date.from(Instant.now()),
-                "Bad ENUM argument",
+                "Bad argument",
                 request.getDescription(false));
 
         log.info("Exception: " + error.getMessage());
