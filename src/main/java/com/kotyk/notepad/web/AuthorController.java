@@ -36,11 +36,11 @@ public class AuthorController implements AuthorSwagger {
     @GetMapping("/authors/{username}")
     @ResponseStatus(HttpStatus.OK)
     public AuthorReadDto readAuthor(@PathVariable String username) {
-        log.debug("readAuthor() Controller - start: username = {}", username);
+        log.debug("Controller: readAuthor() - start: username = {}", username);
         var author = authorService.read(username);
         var dto = AuthorMapper.INSTANCE.authorToReadDto(author);
 
-        log.debug("readAuthor() Controller - end: author = {}", dto);
+        log.debug("Controller: readAuthor() - end: author = {}", dto);
         return dto;
     }
 

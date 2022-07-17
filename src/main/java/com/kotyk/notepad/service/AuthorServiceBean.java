@@ -63,10 +63,8 @@ public class AuthorServiceBean implements AuthorService {
         if (isNotNull(author.getName()) && !author.getName().isBlank()) {
             newAuthor.setName(author.getName());
         }
-        if (isNotNull(author.getEmail()) && isEmailNotTaken(author.getEmail())) {
-            Pattern pattern = Pattern.compile("^[A-Za-z\\d+_.-]+@(.+)");
-            Matcher matcher = pattern.matcher(author.getEmail());
-            if (matcher.matches()) newAuthor.setEmail(author.getEmail());
+        if (isNotNull(author.getEmail()) && isEmail(author.getEmail()) && isEmailNotTaken(author.getEmail())) {
+           newAuthor.setEmail(author.getEmail());
         }
         log.info("update() - end: author's username = {}", author.getUsername());
         return authorRepository.save(newAuthor);
@@ -93,7 +91,7 @@ public class AuthorServiceBean implements AuthorService {
         return author;
     }
 
-    protected Boolean isNotNull(Object obj) {
+    private Boolean isNotNull(Object obj) {
         return obj != null;
     }
 
@@ -109,6 +107,12 @@ public class AuthorServiceBean implements AuthorService {
             throw new EmailAlreadyExistsException();
         }
         return Boolean.TRUE;
+    }
+
+    private Boolean isEmail(String email) {
+        Pattern pattern = Pattern.compile("^[A-Za-z\\d+_.-]+@(.+)");
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     private void trimAuthor(Author author) {
