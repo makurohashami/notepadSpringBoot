@@ -75,9 +75,10 @@ public class AuthorServiceBean implements AuthorService {
         log.info("delete() - start: username = {}", username);
         var author = getAuthorByUsername(username);
         author.setIsDeleted(Boolean.TRUE);
-        for (Note note : author.getNotes()) {
+        /*for (Note note : author.getNotes()) {
             note.setIsDeleted(Boolean.TRUE);
-        }
+        }*/
+        noteRepository.deleteNotesByAuthorUsername(username);
         log.info("delete() - end: isDeleted = {}", author.getIsDeleted());
         authorRepository.save(author);
     }
